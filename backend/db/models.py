@@ -38,15 +38,11 @@ class Student(db.Model):
 class Course(db.Model):
     id = db.Column(db.Integer, primary_key=True, unique=True)
     title = db.Column(db.String(50), unique=True, nullable=False)
-    # Relations:
-    # Student --> interested_students
 
 
 class MagicSkill(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(30), unique=True, nullable=False)
-    # Relations:
-    # MagicSkillAssociation --> students
 
 
 def init_database():

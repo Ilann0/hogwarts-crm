@@ -55,9 +55,12 @@ if __name__ == "__main__":
         db.add_new_course('alchemy')
         db.add_new_magic_skill('omnipotence')
         db.add_new_magic_skill('alchemy')
+        db.add_new_magic_skill('omnipresence')
         db.add_course_to_student(1, 1)
         db.add_skill_to_student(1, 1, 3, 'aquired')
         db.add_skill_to_student(2, 1, 3, 'aquired')
         db.add_skill_to_student(1, 2, 3, 'aquired')
+        db.add_skill_to_student(1, 3, 2, 'desired')
 
+    db.change_skill_level(1, 3, 22)
     run_app()

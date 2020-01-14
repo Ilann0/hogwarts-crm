@@ -1,4 +1,5 @@
 from db.models import db, Student, Course, MagicSkill, MagicSkillAssociation, CourseAssociation
+from db.helpers.change_helpers import change_student_last_update
 # ----------------------------------------------------------------------------------------------------------------
 # Tables
 
@@ -31,6 +32,7 @@ def add_skill_to_student(student_id, skill_id, skill_level, skill_category):
     association = MagicSkillAssociation(skill_level=skill_level, skill_category=skill_category)
     association.magic_skill = MagicSkill.query.get(skill_id)
     student.magic_skills.append(association)
+    change_student_last_update(student_id)
     db.session.commit()
 
 def add_course_to_student(student_id, course_id):
@@ -38,6 +40,7 @@ def add_course_to_student(student_id, course_id):
     association = CourseAssociation()
     association.course = Course.query.get(course_id)
     student.courses_of_interest.append(association)
+    change_student_last_update(student_id)
     db.session.commit()
 
 # def add_course_to_student(student_id, course_id):
