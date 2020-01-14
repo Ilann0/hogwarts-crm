@@ -35,6 +35,7 @@ def add_skill_to_student(student_id, skill_id, skill_level, skill_category):
     change_student_last_update(student_id)
     db.session.commit()
 
+
 def add_course_to_student(student_id, course_id):
     student = Student.query.get(student_id)
     association = CourseAssociation()
@@ -42,9 +43,3 @@ def add_course_to_student(student_id, course_id):
     student.courses_of_interest.append(association)
     change_student_last_update(student_id)
     db.session.commit()
-
-# def add_course_to_student(student_id, course_id):
-#     course = Course.query.get(course_id)
-#     student = Student.query.get(student_id)
-#     student.courses_of_interest.append(course)
-#     db.session.commit()

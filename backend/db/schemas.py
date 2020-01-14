@@ -18,6 +18,7 @@ class CourseSchema(ma.ModelSchema):
     class Meta:
         model = Course
 
+
 class CourseAssociationSchema(ma.ModelSchema):
     class Meta:
         model = CourseAssociation

@@ -50,6 +50,7 @@ def get_magic_skills_by_title(skill_title):
 
 # ----------------------------------------------------------------------------------------------------------------
 # Course
+
 def get_all_courses():
     courses = Course.query.all()
     return course_schema.dump(courses, many=True)

@@ -4,6 +4,7 @@ import flask_sqlalchemy
 
 from app import database as db
 
+
 class MagicSkillAssociation(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     student_id = db.Column(db.Integer, db.ForeignKey('student.id', ondelete='CASCADE'), unique=False)
@@ -43,7 +44,3 @@ class Course(db.Model):
 class MagicSkill(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(30), unique=True, nullable=False)
-
-
-def init_database():
-    db.create_all()
