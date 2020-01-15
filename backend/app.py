@@ -5,6 +5,7 @@ import flask
 from flask import jsonify
 import flask_sqlalchemy
 import flask_marshmallow
+from marshmallow import pprint
 
 import db
 
@@ -20,17 +21,17 @@ database = flask_sqlalchemy.SQLAlchemy(app=app)
 marshmallow = flask_marshmallow.Marshmallow(app=app)
 
 
-@app.route('/student/<int:id>')
+@app.route('/get/student/<int:id>')
 def student(id):
     return jsonify(db.get_student_by_id(id))
 
 
-@app.route('/students/detailed')
+@app.route('/get/students/detailed')
 def students_detailed():
     return jsonify(db.get_all_students())
 
 
-@app.route('/students')
+@app.route('/get/students')
 def students():
     students = db.get_all_students()
     for student in students:
@@ -40,9 +41,24 @@ def students():
     return jsonify(students)
 
 
-@app.route('/add_student')
+@app.route('/add/student', methods=['POST'])
 def add_student():
     return 'add_student'
+
+
+@app.route('/student/<int:sid>/<int:cid>')
+def h(sid, cid):
+    return jsonify(db.add_course_to_student(sid, cid))
+
+
+@app.route('/delete/student', methods=['POST', 'DELETE'])
+def delete_student():
+    return 'delete_student'
+
+
+@app.route('/update/student', methods=['POST', 'PUT'])
+def update_student():
+    return 'update_student'
 
 
 def run_app():
@@ -55,5 +71,9 @@ if __name__ == "__main__":
             print('DB Exists')
     except IOError:
         db.init_database()
+
+    # print(db.Student.query.filter_by(id=4).one())
+    # print(db.change_skill_level(1, 1, 1))
+    pprint(db.get_all_students())
 
     run_app()

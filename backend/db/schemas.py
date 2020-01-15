@@ -11,7 +11,7 @@ class MagicSkillAssociationSchema(ma.ModelSchema):
     class Meta:
         model = MagicSkillAssociation
 
-    magic_skill = ma.Nested(MagicSkillSchema)
+    magic_skill = ma.Nested(MagicSkillSchema, exclude=('id',))
 
 
 class CourseSchema(ma.ModelSchema):
