@@ -2,10 +2,11 @@ from datetime import datetime
 import threading
 
 import flask
-from flask import jsonify
+from flask import jsonify, request
 import flask_sqlalchemy
 import flask_marshmallow
 from marshmallow import pprint
+import flask_cors
 
 import db
 
@@ -14,6 +15,8 @@ HOST = 'localhost'
 DEBUG = True
 
 app = flask.Flask(__name__)
+flask_cors.CORS(app)
+
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db/db.sqlite3'
 
@@ -21,44 +24,93 @@ database = flask_sqlalchemy.SQLAlchemy(app=app)
 marshmallow = flask_marshmallow.Marshmallow(app=app)
 
 
-@app.route('/get/student/<int:id>')
-def student(id):
+# ----------------------------------------------------------------------------------------------------------------
+# Students
+
+# TODO
+@app.route('/student', methods=['POST', 'DELETE', 'PUT'])
+def student():
+    data = request.get_json()
+
+    if request.method == 'POST':
+        return jsonify(db.add_new_student_with_props(data))
+
+    elif request.method == 'DELETE':
+        return jsonify(db.delete_student(data))
+
+    elif request.method == 'PUT':
+        return 'Not yet implemented..'
+
+# DONE
+@app.route('/student/<int:id>')
+def student_id(id):
     return jsonify(db.get_student_by_id(id))
 
-
-@app.route('/get/students/detailed')
+# DONE
+@app.route('/students/detailed')
 def students_detailed():
+    return jsonify(db.get_all_students_detailed())
+
+# DONE
+@app.route('/students')
+def students():
     return jsonify(db.get_all_students())
 
-
-@app.route('/get/students')
-def students():
-    students = db.get_all_students()
-    for student in students:
-        del student['magic_skills']
-        del student['courses_of_interest']
-
-    return jsonify(students)
+# ----------------------------------------------------------------------------------------------------------------
+# Courses
 
 
-@app.route('/add/student', methods=['POST'])
-def add_student():
-    return 'add_student'
+# TODO
+@app.route('/course', methods=['POST', 'DELETE', 'PUT'])
+def course():
+    data = request.get_json()
+
+    if request.method == 'POST':
+        return jsonify(db.add_new_course(data))
+
+    elif request.method == 'DELETE':
+        return jsonify(db.delete_course(data))
+
+    elif request.method == 'PUT':
+        return 'Not yet implemented..'
+
+# DONE
+@app.route('/course/<int:id>', methods=['GET'])
+def course_id(id):
+    return jsonify(db.get_course_by_id(id))
+
+# DONE
+@app.route('/courses', methods=['GET'])
+def courses():
+    return jsonify(db.get_all_courses())
+
+# ----------------------------------------------------------------------------------------------------------------
+# Magic Skills
 
 
-@app.route('/student/<int:sid>/<int:cid>')
-def h(sid, cid):
-    return jsonify(db.add_course_to_student(sid, cid))
+# TODO
+@app.route('/magic_skill', methods=['POST', 'DELETE', 'PUT'])
+def add_magic_skill():
+    data = request.get_json()
 
+    if request.method == 'POST':
+        return jsonify(db.add_new_magic_skill(data))
 
-@app.route('/delete/student', methods=['POST', 'DELETE'])
-def delete_student():
-    return 'delete_student'
+    elif request.method == 'DELETE':
+        return jsonify(db.delete_magic_skill(data))
 
+    elif request.method == 'PUT':
+        return 'Not yet implemented..'
 
-@app.route('/update/student', methods=['POST', 'PUT'])
-def update_student():
-    return 'update_student'
+# DONE
+@app.route('/magic_skill/<int:id>', methods=['GET'])
+def magic_skill_id(id):
+    return jsonify(db.get_magic_skill_by_id(id))
+
+# DONE
+@app.route('/magic_skills', methods=['GET'])
+def magic_skills():
+    return jsonify(db.get_all_magic_skills())
 
 
 def run_app():
@@ -71,9 +123,5 @@ if __name__ == "__main__":
             print('DB Exists')
     except IOError:
         db.init_database()
-
-    # print(db.Student.query.filter_by(id=4).one())
-    # print(db.change_skill_level(1, 1, 1))
-    pprint(db.get_all_students())
 
     run_app()
