@@ -1,0 +1,13 @@
+.MuiTableRow-root {
+	cursor: pointer;
+	transition-duration: opacity 0.2s;
+}
+
+.MuiTableRow-head {
+	cursor: unset;
+	opacity: 0.7;
+}
+
+.MuiTableRow-root:active {
+	opacity: 0.7;
+}

@@ -25,6 +25,7 @@ magic_skill_assoc_schema = MagicSkillAssociationSchema()
 @catch_errors
 def get_all_students():
     students = Student.query.all()
+    print(students)
     return simple_student_schema.dump(students, many=True)
 
 
@@ -43,7 +44,7 @@ def get_students_by(*args, **kwargs):
 @catch_errors
 def get_student_by_id(student_id):
     student = Student.query.filter_by(id=student_id).one()
-    return student_schema.dump(student)
+    return student_schema.dump(student), 200
 
 
 # ----------------------------------------------------------------------------------------------------------------

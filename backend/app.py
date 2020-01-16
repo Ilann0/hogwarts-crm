@@ -1,16 +1,15 @@
 from datetime import datetime
 import threading
 
-import flask
-from flask import jsonify, request
-import flask_sqlalchemy
+from flask import request, jsonify
 import flask_marshmallow
-from marshmallow import pprint
+import flask_sqlalchemy
 import flask_cors
+import flask
 
 import db
 
-PORT = 3000
+PORT = 5000
 HOST = 'localhost'
 DEBUG = True
 
@@ -33,10 +32,10 @@ def student():
     data = request.get_json()
 
     if request.method == 'POST':
-        return jsonify(db.add_new_student_with_props(data))
+        return db.add_new_student_with_props(data)
 
     elif request.method == 'DELETE':
-        return jsonify(db.delete_student(data))
+        return db.delete_student(data)
 
     elif request.method == 'PUT':
         return 'Not yet implemented..'
@@ -44,12 +43,12 @@ def student():
 # DONE
 @app.route('/student/<int:id>')
 def student_id(id):
-    return jsonify(db.get_student_by_id(id))
+    return db.get_student_by_id(id)
 
 # DONE
 @app.route('/students/detailed')
 def students_detailed():
-    return jsonify(db.get_all_students_detailed())
+    return db.get_all_students_detailed()
 
 # DONE
 @app.route('/students')
@@ -66,10 +65,10 @@ def course():
     data = request.get_json()
 
     if request.method == 'POST':
-        return jsonify(db.add_new_course(data))
+        return db.add_new_course(data)
 
     elif request.method == 'DELETE':
-        return jsonify(db.delete_course(data))
+        return db.delete_course(data)
 
     elif request.method == 'PUT':
         return 'Not yet implemented..'
@@ -77,7 +76,7 @@ def course():
 # DONE
 @app.route('/course/<int:id>', methods=['GET'])
 def course_id(id):
-    return jsonify(db.get_course_by_id(id))
+    return db.get_course_by_id(id)
 
 # DONE
 @app.route('/courses', methods=['GET'])
@@ -94,10 +93,10 @@ def add_magic_skill():
     data = request.get_json()
 
     if request.method == 'POST':
-        return jsonify(db.add_new_magic_skill(data))
+        return db.add_new_magic_skill(data)
 
     elif request.method == 'DELETE':
-        return jsonify(db.delete_magic_skill(data))
+        return db.delete_magic_skill(data)
 
     elif request.method == 'PUT':
         return 'Not yet implemented..'
@@ -105,10 +104,10 @@ def add_magic_skill():
 # DONE
 @app.route('/magic_skill/<int:id>', methods=['GET'])
 def magic_skill_id(id):
-    return jsonify(db.get_magic_skill_by_id(id))
+    return db.get_magic_skill_by_id(id)
 
 # DONE
-@app.route('/magic_skills', methods=['GET'])
+@app.route('/magicskills', methods=['GET'])
 def magic_skills():
     return jsonify(db.get_all_magic_skills())
 
@@ -123,5 +122,6 @@ if __name__ == "__main__":
             print('DB Exists')
     except IOError:
         db.init_database()
+        print('Created DB')
 
     run_app()
