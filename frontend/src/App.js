@@ -20,7 +20,7 @@ function App() {
 						main: '#648dae',
 					},
 					secondary: {
-						main: '#f48fb1',
+						main: '#FF4500',
 					},
 				},
 			}),
