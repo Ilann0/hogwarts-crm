@@ -6,32 +6,52 @@ import MagicSkill from './pages/MagicSkillManager';
 import MiniDrawer from './components/MiniDrawer';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import './App.css';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
+import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 
 function App() {
+	const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
+	const theme = React.useMemo(
+		() =>
+			createMuiTheme({
+				palette: {
+					type: prefersDarkMode ? 'dark' : 'light',
+					primary: {
+						main: '#648dae',
+					},
+					secondary: {
+						main: '#f48fb1',
+					},
+				},
+			}),
+		[prefersDarkMode]
+	);
 	return (
 		<Router>
-			<MiniDrawer title='Hogwarts Management'>
-				<Switch>
-					<Route exact path='/'>
-						Home
-					</Route>
-					<Route exact path='/dashboard'>
-						Dashboard
-					</Route>
-					<Route exact path='/students'>
-						<StudentManager />
-					</Route>
-					<Route exact path='/course'>
-						<CourseManager />
-					</Route>
-					<Route exact path='/magicskills'>
-						<MagicSkill />
-					</Route>
-					<Route exact path='/student/:id'>
-						Student
-					</Route>
-				</Switch>
-			</MiniDrawer>
+			<ThemeProvider theme={theme}>
+				<MiniDrawer title='Hogwarts Management'>
+					<Switch>
+						<Route exact path='/'>
+							Home
+						</Route>
+						<Route exact path='/dashboard'>
+							Dashboard
+						</Route>
+						<Route exact path='/students'>
+							<StudentManager />
+						</Route>
+						<Route exact path='/courses'>
+							<CourseManager />
+						</Route>
+						<Route exact path='/magicskills'>
+							<MagicSkill />
+						</Route>
+						<Route exact path='/student/:id'>
+							<StudentDetails />
+						</Route>
+					</Switch>
+				</MiniDrawer>
+			</ThemeProvider>
 		</Router>
 	);
 }

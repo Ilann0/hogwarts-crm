@@ -12,6 +12,7 @@ student_schema = StudentSchema(exclude=(
     'courses_of_interest.course.id',
     'courses_of_interest.student'))
 
+student_schema = StudentSchema()
 course_schema = CourseSchema()
 
 magic_skill_schema = MagicSkillSchema()

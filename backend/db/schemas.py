@@ -1,5 +1,6 @@
 from .models import MagicSkillAssociation, Student, MagicSkill, Course, CourseAssociation
 from app import marshmallow as ma
+from marshmallow import fields, post_dump
 
 
 class MagicSkillSchema(ma.ModelSchema):
@@ -8,10 +9,20 @@ class MagicSkillSchema(ma.ModelSchema):
 
 
 class MagicSkillAssociationSchema(ma.ModelSchema):
+    magic_skill = ma.Nested(MagicSkillSchema)
+
     class Meta:
         model = MagicSkillAssociation
 
-    magic_skill = ma.Nested(MagicSkillSchema, exclude=('id',))
+    @post_dump
+    def make_dump(self, data, *args, **kwargs):
+        print(data)
+        return {
+            'id': data['magic_skill']['id'],
+            'title': data['magic_skill']['title'],
+            'skill_category': data['skill_category'],
+            'skill_level': data['skill_level'],
+        }
 
 
 class CourseSchema(ma.ModelSchema):
@@ -20,10 +31,18 @@ class CourseSchema(ma.ModelSchema):
 
 
 class CourseAssociationSchema(ma.ModelSchema):
+    course = ma.Nested(CourseSchema)
+
     class Meta:
         model = CourseAssociation
 
-    course = ma.Nested(CourseSchema)
+    @post_dump
+    def make_dump(self, data, *args, **kwargs):
+        print(data)
+        return {
+            'id': data['course']['id'],
+            'title': data['course']['title'],
+        }
 
 
 class StudentSchema(ma.ModelSchema):

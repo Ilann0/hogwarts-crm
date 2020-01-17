@@ -32,6 +32,9 @@ const useStyles = makeStyles(theme => ({
 			duration: theme.transitions.duration.leavingScreen,
 		}),
 	},
+	toolbarTop: {
+		backgroundColor: '#648dae',
+	},
 	appBarShift: {
 		marginLeft: drawerWidth,
 		width: `calc(100% - ${drawerWidth}px)`,
@@ -73,7 +76,7 @@ const useStyles = makeStyles(theme => ({
 		display: 'flex',
 		alignItems: 'center',
 		justifyContent: 'flex-end',
-		padding: theme.spacing(0, 1),
+		padding: theme.spacing(0, 2),
 		...theme.mixins.toolbar,
 	},
 	content: {
@@ -85,11 +88,7 @@ const useStyles = makeStyles(theme => ({
 function MiniDrawer(props) {
 	const classes = useStyles();
 	const theme = useTheme();
-	const [open, setOpen] = React.useState(false);
-	const [SelectedDash, setSelectedDash] = React.useState(false);
-	const [SelectedStud, setSelectedStud] = React.useState(false);
-	const [SelectedCour, setSelectedCour] = React.useState(false);
-	const [SelectedMS, setSelectedMS] = React.useState(false);
+	const [open, setOpen] = React.useState(true);
 
 	const handleDrawerOpen = () => {
 		setOpen(true);
@@ -97,30 +96,6 @@ function MiniDrawer(props) {
 
 	const handleDrawerClose = () => {
 		setOpen(false);
-	};
-
-	const handleSetSelect = e => {
-		setSelectedDash(false);
-		setSelectedStud(false);
-		setSelectedCour(false);
-		setSelectedMS(false);
-
-		switch (e.currentTarget.className) {
-			case 'Dashboard':
-				setSelectedDash(true);
-				break;
-			case 'Students':
-				setSelectedStud(true);
-				break;
-			case 'Courses':
-				setSelectedCour(true);
-				break;
-			case 'Magic Skills':
-				setSelectedCour(true);
-				break;
-			default:
-				return;
-		}
 	};
 
 	const { title = 'CRM', children = 'No content' } = props;
@@ -133,7 +108,7 @@ function MiniDrawer(props) {
 					[classes.appBarShift]: open,
 				})}
 			>
-				<Toolbar>
+				<Toolbar className={classes.toolbarTop}>
 					<IconButton
 						color='inherit'
 						aria-label='open drawer'
@@ -174,36 +149,16 @@ function MiniDrawer(props) {
 				</div>
 				<Divider />
 				<List>
-					<MenuItemBox
-						text='Dashboard'
-						path='/dashboard'
-						parentSetSelect={handleSetSelect}
-						selected={SelectedDash}
-					>
+					<MenuItemBox text='Dashboard' path='/dashboard'>
 						<DashboardIcon />
 					</MenuItemBox>
-					<MenuItemBox
-						text='Students'
-						path='/students'
-						parentSetSelect={handleSetSelect}
-						selected={SelectedStud}
-					>
+					<MenuItemBox text='Students' path='/students'>
 						<AssignmentIndIcon />
 					</MenuItemBox>
-					<MenuItemBox
-						text='Courses'
-						path='/course'
-						parentSetSelect={handleSetSelect}
-						selected={SelectedCour}
-					>
+					<MenuItemBox text='Courses' path='/courses'>
 						<ClassIcon />
 					</MenuItemBox>
-					<MenuItemBox
-						text='Magic Skills'
-						path='/magicskills'
-						parentSetSelect={handleSetSelect}
-						selected={SelectedMS}
-					>
+					<MenuItemBox text='Magic Skills' path='/magicskills'>
 						<LocalActivityIcon />
 					</MenuItemBox>
 				</List>

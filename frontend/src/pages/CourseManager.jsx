@@ -19,6 +19,7 @@ function CourseManager() {
 
 	return (
 		<>
+			<h1>Courses</h1>
 			<SimpleTable
 				routeName='course'
 				rowTitles={['ID', 'title']}

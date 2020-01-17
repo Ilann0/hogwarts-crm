@@ -18,6 +18,7 @@ function MagicSkillManager() {
 
 	return (
 		<>
+			<h1>Magic Skills</h1>
 			<SimpleTable
 				routeName='magicskill'
 				rowTitles={['ID', 'title']}

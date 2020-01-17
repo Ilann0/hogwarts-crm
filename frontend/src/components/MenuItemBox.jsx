@@ -1,33 +1,32 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import { Link } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 
 function MenuItem(props) {
-	const {
-		text = 'Default',
-		path = '/',
-		selected = false,
-		parentSetSelect = () => {},
-		children,
-	} = props;
+	const [selected, setSelected] = useState(false);
+	const { text = 'Default', path = '/', children, location, history } = props;
+
+	useEffect(() => {
+		if (location.pathname.split('/')[1] === path.split('/')[1])
+			setSelected(true);
+		else setSelected(false);
+	}, [location, path]);
+
 	return (
 		<div>
-			<Link
-				exact
-				to={path}
-				style={{ textDecoration: 'none' }}
-				onClick={parentSetSelect}
-				activeClassName={text}
+			<ListItem
+				button
+				key={text}
+				selected={selected}
+				onClick={e => history.push(path)}
 			>
-				<ListItem button key={text} selected={selected}>
-					<ListItemIcon>{children}</ListItemIcon>
-					<ListItemText primary={text} />
-				</ListItem>
-			</Link>
+				<ListItemIcon>{children}</ListItemIcon>
+				<ListItemText primary={text} />
+			</ListItem>
 		</div>
 	);
 }
 
-export default MenuItem;
+export default withRouter(MenuItem);

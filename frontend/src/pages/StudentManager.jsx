@@ -28,6 +28,7 @@ function StudentManager() {
 	}, []);
 	return (
 		<>
+			<h1>Students</h1>
 			<SimpleTable
 				routeName='student'
 				rowTitles={['ID', 'Full Name', 'Date Created', 'Last Update']}
