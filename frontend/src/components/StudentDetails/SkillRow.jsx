@@ -4,6 +4,8 @@ import Fab from '@material-ui/core/Fab';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import CustSlider from './SkillRow/CustSlider';
 import Dropdown from './SkillRow/Dropdown';
+import { useDispatch } from 'react-redux';
+import { setSkill, removeSkill } from '../../redux/actions/studentActions';
 
 const useStyles = makeStyles(theme => ({
 	skillRow: {
@@ -19,6 +21,43 @@ const useStyles = makeStyles(theme => ({
 
 function SkillRow(props) {
 	const classes = useStyles();
+	const dispatch = useDispatch();
+
+	function handleSlider(_, val) {
+		dispatch(
+			setSkill({
+				index: props.index,
+				data: {
+					skill_level: val,
+				},
+			})
+		);
+	}
+
+	function handleDropDownOne(e) {
+		dispatch(
+			setSkill({
+				index: props.index,
+				data: {
+					title: e.target.id,
+					id: e.target.value,
+				},
+			})
+		);
+	}
+
+	function handleDropDownTwo(e) {
+		console.log(e.target);
+		dispatch(
+			setSkill({
+				index: props.index,
+				data: {
+					skill_category: e.target.value,
+				},
+			})
+		);
+	}
+
 	const {
 		sliderTitle = 'Skill Level',
 		initSlider = 1,
@@ -31,28 +70,32 @@ function SkillRow(props) {
 			{ title: 'aquired', id: 'aquired' },
 		],
 		initDropTwo = '',
+		index,
 	} = props;
 	return (
 		<div className={classes.skillRow}>
-			<CustSlider
-				title={sliderTitle}
-				initVal={initSlider}
-				className={classes.slider}
-				emptySelect
-			/>
 			<Dropdown
 				title={dropOneTitle}
 				items={dropOneItems}
 				initVal={initDropOne}
 				emptySelect
+				onChange={handleDropDownOne}
 			/>
 			<Dropdown
 				title={dropTwoTitle}
 				items={dropTwoItems}
 				initVal={initDropTwo}
-				emptySelect={initDropTwo == '' ? true : false}
+				emptySelect={initDropTwo === '' ? true : false}
+				onChange={handleDropDownTwo}
 			/>
-			<Fab color='secondary'>
+			<CustSlider
+				title={sliderTitle}
+				initVal={initSlider}
+				className={classes.slider}
+				emptySelect
+				onChange={handleSlider}
+			/>
+			<Fab color='secondary' onClick={() => dispatch(removeSkill(index))}>
 				<DeleteForeverIcon />
 			</Fab>
 		</div>

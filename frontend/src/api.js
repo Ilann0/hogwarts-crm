@@ -13,3 +13,7 @@ export function getCourses() {
 export function getSkills() {
 	return axios.get(URL + '/magicskills');
 }
+
+export function getSkillById(id) {
+	return axios.get(URL + '/magicskill/' + id);
+}

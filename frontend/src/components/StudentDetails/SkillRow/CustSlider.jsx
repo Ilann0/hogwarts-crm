@@ -3,13 +3,15 @@ import { Typography, Slider } from '@material-ui/core';
 
 function CustSlider(props) {
 	const { title = 'Title', initVal = 1, ...rest } = props;
+
 	return (
 		<div className={props.className}>
 			<Typography id={'discrete-slider' + title} gutterBottom>
 				{title}
 			</Typography>
 			<Slider
-				defaultValue={initVal}
+				// defaultValue={initVal}
+				value={initVal}
 				aria-labelledby={'discrete-slider' + title}
 				valueLabelDisplay='auto'
 				step={1}

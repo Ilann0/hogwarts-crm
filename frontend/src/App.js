@@ -3,7 +3,7 @@ import StudentDetails from './pages/StudentDetails';
 import StudentManager from './pages/StudentManager';
 import CourseManager from './pages/CourseManager';
 import MagicSkill from './pages/MagicSkillManager';
-import MiniDrawer from './components/MiniDrawer';
+import MiniDrawer from './components/Navigation/MiniDrawer';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import './App.css';
 import useMediaQuery from '@material-ui/core/useMediaQuery';

@@ -22,6 +22,11 @@ class MagicSkillAssociationSchema(ma.ModelSchema):
             'title': data['magic_skill']['title'],
             'skill_category': data['skill_category'],
             'skill_level': data['skill_level'],
+            'meta': {
+                'isNew': False,
+                'isModified': False,
+                'isDeleted': False,
+            }
         }
 
 

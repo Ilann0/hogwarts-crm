@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -18,21 +18,22 @@ const useStyles = makeStyles(theme => ({
 
 function Dropdown(props) {
 	const classes = useStyles();
-	const [value, setValue] = useState(props.initVal);
 
-	function handleChange(e) {
-		setValue(e.target.value);
-	}
-
-	const { title = 'Title', items = [], emptySelect = false } = props;
+	const {
+		title = 'Title',
+		items = [],
+		emptySelect = false,
+		initVal,
+		...rest
+	} = props;
 	return (
 		<FormControl variant='filled' className={classes.formControl}>
 			<InputLabel id={'select-field-label' + title}>{title}</InputLabel>
 			<Select
 				labelId='select-field-label'
 				id='select'
-				value={value}
-				onChange={handleChange}
+				value={initVal}
+				{...rest}
 			>
 				{emptySelect && (
 					<MenuItem value={false} className={classes.selectEmpty}>
@@ -40,7 +41,11 @@ function Dropdown(props) {
 					</MenuItem>
 				)}
 				{items.map(item => (
-					<MenuItem key={item.title + item.id} value={item.id}>
+					<MenuItem
+						key={item.title + item.id}
+						value={item.id}
+						id={item.title}
+					>
 						{item.title}
 					</MenuItem>
 				))}
