@@ -13,7 +13,7 @@ class MagicSkillAssociation(db.Model):
     skill_level = db.Column(db.Integer, default=1)
 
     student = db.relationship('Student', backref=db.backref('magic_skills', cascade='all, delete-orphan'))
-    magic_skill = db.relationship('MagicSkill', foreign_keys=[skill_id])
+    magic_skill = db.relationship('MagicSkill', foreign_keys=[skill_id], backref=db.backref('_', cascade='all, delete-orphan'))
 
 
 class CourseAssociation(db.Model):

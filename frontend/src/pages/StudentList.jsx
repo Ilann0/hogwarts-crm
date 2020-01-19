@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import SimpleTable from '../components/SimpleTable';
 import axios from 'axios';
 
-function StudentManager() {
+function StudentList() {
 	const [students, setStudents] = useState([]);
 	useEffect(() => {
 		axios.get('http://127.0.0.1:5000/students').then(res => {
@@ -26,10 +26,11 @@ function StudentManager() {
 			setStudents(students);
 		});
 	}, []);
+
 	return (
 		<>
-			<h1>Students</h1>
 			<SimpleTable
+				tableTitle='Students'
 				routeName='student'
 				rowTitles={['ID', 'Full Name', 'Date Created', 'Last Update']}
 				dataList={students}
@@ -38,4 +39,4 @@ function StudentManager() {
 	);
 }
 
-export default StudentManager;
+export default StudentList;

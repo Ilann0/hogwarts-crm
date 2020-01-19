@@ -4,19 +4,27 @@ import { makeStyles } from '@material-ui/core/styles';
 import { TextField, Container, Button, Paper } from '@material-ui/core';
 import { useSelector, useDispatch } from 'react-redux';
 
-import { getSkills, getCourses } from '../api';
 import SkillRow from '../components/StudentDetails/SkillRow';
+import {
+	getSkills,
+	getCourses,
+	addNewStudent,
+	updateStudent,
+	deleteStudent,
+} from '../api';
 import {
 	fetchStudent,
 	setFirstName,
 	setLastName,
 	addSkill,
+	resetStudent,
 } from '../redux/actions/studentActions';
 
 function StudentDetails(props) {
 	const classes = useStyles();
 	const [skillsList, setSkillsList] = useState([]);
-	const state = useSelector(state => state);
+	const [coursesList, setCoursesList] = useState([]);
+	const state = useSelector(state => state.student);
 	const dispatch = useDispatch();
 
 	const { location } = props;
@@ -24,38 +32,61 @@ function StudentDetails(props) {
 	const student_id = parseInt(location.pathname.split('/')[2]);
 
 	useEffect(() => {
-		dispatch(fetchStudent(student_id));
 		getSkills().then(res => {
 			setSkillsList(res.data);
 		});
-	}, [student_id, dispatch]);
+		getCourses().then(res => {
+			setCoursesList(res.data);
+		});
+
+		if (!props.isCreateMode) {
+			dispatch(fetchStudent(student_id));
+		}
+		return () => {
+			dispatch(resetStudent());
+		};
+	}, [student_id, dispatch, props.isCreateMode]);
 
 	function handleSubmit(e) {
 		e.preventDefault();
 	}
 
-	function handleSave() {}
+	function handleSave() {
+		if (props.isCreateMode) {
+			addNewStudent(state);
+		} else {
+			updateStudent(state);
+		}
+	}
 
 	const {
 		first_name,
 		last_name,
 		magic_skills,
-		courses_of_interest,
+		// courses_of_interest,
 		loading,
-	} = state.student;
+	} = state;
 	return (
 		<>
 			{!loading && (
 				<Container component={Paper} className={classes.root}>
 					<div className={classes.titleContainer}>
-						<h1 className={classes.title}>Edit Student</h1>
-						<Button
-							color='secondary'
-							onClick={() => {}}
-							variant='contained'
-						>
-							Delete
-						</Button>
+						<h1 className={classes.title}>
+							{props.isCreateMode
+								? 'Create Student'
+								: 'Edit Student'}
+						</h1>
+						{!props.isCreateMode && (
+							<Button
+								color='secondary'
+								onClick={() => {
+									deleteStudent(student_id);
+								}}
+								variant='contained'
+							>
+								Delete
+							</Button>
+						)}
 					</div>
 					<form onSubmit={e => handleSubmit(e)}>
 						<div className={classes.line}>

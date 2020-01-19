@@ -27,23 +27,25 @@ marshmallow = flask_marshmallow.Marshmallow(app=app)
 # Students
 
 # TODO
-@app.route('/student', methods=['POST', 'DELETE', 'PUT'])
+@app.route('/student', methods=['POST', 'PUT'])
 def student():
     data = request.get_json()
 
     if request.method == 'POST':
         return db.add_new_student_with_props(data)
 
-    elif request.method == 'DELETE':
-        return db.delete_student(data)
-
     elif request.method == 'PUT':
-        return 'Not yet implemented..'
+        print(data)
+        return db.update_student(data)
 
 # DONE
-@app.route('/student/<int:id>')
+@app.route('/student/<int:id>', methods=['GET', 'DELETE'])
 def student_id(id):
-    return db.get_student_by_id(id)
+    if request.method == 'GET':
+        return db.get_student_by_id(id)
+
+    elif request.method == 'DELETE':
+        return db.delete_student(id)
 
 # DONE
 @app.route('/students/detailed')
@@ -60,23 +62,24 @@ def students():
 
 
 # TODO
-@app.route('/course', methods=['POST', 'DELETE', 'PUT'])
+@app.route('/course', methods=['POST', 'PUT'])
 def course():
     data = request.get_json()
 
     if request.method == 'POST':
         return db.add_new_course(data)
 
-    elif request.method == 'DELETE':
-        return db.delete_course(data)
-
     elif request.method == 'PUT':
         return 'Not yet implemented..'
 
 # DONE
-@app.route('/course/<int:id>', methods=['GET'])
+@app.route('/course/<int:id>', methods=['GET', 'DELETE'])
 def course_id(id):
-    return db.get_course_by_id(id)
+    if request.method == 'GET':
+        return db.get_course_by_id(id)
+
+    elif request.method == 'DELETE':
+        return db.delete_course(id)
 
 # DONE
 @app.route('/courses', methods=['GET'])
@@ -88,23 +91,24 @@ def courses():
 
 
 # TODO
-@app.route('/magic_skill', methods=['POST', 'DELETE', 'PUT'])
+@app.route('/magicskill', methods=['POST', 'PUT'])
 def add_magic_skill():
     data = request.get_json()
 
     if request.method == 'POST':
         return db.add_new_magic_skill(data)
 
-    elif request.method == 'DELETE':
-        return db.delete_magic_skill(data)
-
     elif request.method == 'PUT':
         return 'Not yet implemented..'
 
 # DONE
-@app.route('/magic_skill/<int:id>', methods=['GET'])
+@app.route('/magicskill/<int:id>', methods=['GET', 'DELETE'])
 def magic_skill_id(id):
-    return db.get_magic_skill_by_id(id)
+    if request.method == 'GET':
+        return db.get_magic_skill_by_id(id)
+
+    elif request.method == 'DELETE':
+        return db.delete_magic_skill(id)
 
 # DONE
 @app.route('/magicskills', methods=['GET'])
@@ -124,4 +128,8 @@ if __name__ == "__main__":
         db.init_database()
         print('Created DB')
 
+    #
+    # db.db.rollback()
+
+    print(db.Student.query.get(1).courses_of_interest)
     run_app()

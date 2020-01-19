@@ -5,17 +5,20 @@ const initialState = {
 	title: '',
 };
 
-export const magicSkillReducer = createReducer(initialState, {
-	INIT_MAGIC_SKILL: (state, action) => {
+export const courseReducer = createReducer(initialState, {
+	INIT_COURSE: (state, action) => {
 		return { ...state, ...action.payload };
+	},
+	RESET_COURSE: (state, action) => {
+		return initialState;
 	},
 	TOGGLE_LOADING: (state, _) => {
 		state.loading = !state.loading;
 	},
-	UPDATE_MAGIC_SKILL: (state, action) => {
+	UPDATE_COURSE_TITLE: (state, action) => {
 		state['title'] = action.payload;
 	},
-	RESET_MAGIC_SKILL: (state, action) => {
-		return initialState;
+	REMOVE_COURSE: (state, action) => {
+		return {};
 	},
 });

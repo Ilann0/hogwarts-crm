@@ -12,6 +12,7 @@ export const addSkill = createAction('ADD_STUDENT_SKILL');
 export const removeSkill = createAction('REMOVE_STUDENT_SKILL');
 export const addCourse = createAction('ADD_STUDENT_COURSE');
 export const removeCourse = createAction('REMOVE_STUDENT_COURSE');
+export const resetStudent = createAction('RESET_STUDENT');
 
 export const fetchStudent = id => dispatch => {
 	dispatch(toggleLoading());

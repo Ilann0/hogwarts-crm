@@ -2,25 +2,10 @@ import { createReducer } from '@reduxjs/toolkit';
 
 const initialState = {
 	loading: false,
-	// courses_of_interest: [
-	// 	{
-	// 		id: 1,
-	// 		title: '',
-	// 	},
-	// ],
-	// date_created: '',
-	// first_name: '',
-	// id: 1,
-	// last_name: '',
-	// last_update: '',
-	// magic_skills: [
-	// 	{
-	// 		id: 1,
-	// 		skill_category: '',
-	// 		skill_level: 1,
-	// 		title: '',
-	// 	},
-	// ],
+	courses_of_interest: [],
+	first_name: '',
+	last_name: '',
+	magic_skills: [],
 };
 
 export const studentReducer = createReducer(initialState, {
@@ -29,6 +14,9 @@ export const studentReducer = createReducer(initialState, {
 	},
 	INIT_STUDENT: (state, action) => {
 		return { ...state, ...action.payload };
+	},
+	RESET_STUDENT: (state, action) => {
+		return initialState;
 	},
 	UPDATE_STUDENT_FNAME: (state, action) => {
 		state.first_name = action.payload;
@@ -78,6 +66,6 @@ export const studentReducer = createReducer(initialState, {
 		state.courses_of_interest.append(action.payload);
 	},
 	REMOVE_STUDENT_COURSE: (state, action) => {
-		state.courses_of_interests.pop(action.payload);
+		state.courses_of_interest.pop(action.payload);
 	},
 });

@@ -5,12 +5,12 @@ from db.helpers.error_helpers import catch_errors
 # Schemas
 
 simple_student_schema = StudentSchema(only=('id', 'first_name', 'last_name', 'date_created', 'last_update'))
-student_schema = StudentSchema(exclude=(
-    'magic_skills.student',
-    'magic_skills.id',
-    'courses_of_interest.id',
-    'courses_of_interest.course.id',
-    'courses_of_interest.student'))
+# student_schema = StudentSchema(exclude=(
+#     'magic_skills.student',
+#     'magic_skills.id',
+#     'courses_of_interest.id',
+#     'courses_of_interest.course.id',
+#     'courses_of_interest.student'))
 
 student_schema = StudentSchema()
 course_schema = CourseSchema()
@@ -26,7 +26,6 @@ magic_skill_assoc_schema = MagicSkillAssociationSchema()
 @catch_errors
 def get_all_students():
     students = Student.query.all()
-    print(students)
     return simple_student_schema.dump(students, many=True)
 
 
@@ -39,10 +38,10 @@ def get_all_students_detailed():
 @catch_errors
 def get_students_by(*args, **kwargs):
     students = Student.query.filter_by(**kwargs).all()
-    return student_schema.dump(students, many=True)
+    return student_schema.dump(students, many=True), 200
 
 
-@catch_errors
+# @catch_errors
 def get_student_by_id(student_id):
     student = Student.query.filter_by(id=student_id).one()
     return student_schema.dump(student), 200

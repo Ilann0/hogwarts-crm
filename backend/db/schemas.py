@@ -16,7 +16,6 @@ class MagicSkillAssociationSchema(ma.ModelSchema):
 
     @post_dump
     def make_dump(self, data, *args, **kwargs):
-        print(data)
         return {
             'id': data['magic_skill']['id'],
             'title': data['magic_skill']['title'],
@@ -43,10 +42,13 @@ class CourseAssociationSchema(ma.ModelSchema):
 
     @post_dump
     def make_dump(self, data, *args, **kwargs):
-        print(data)
         return {
             'id': data['course']['id'],
             'title': data['course']['title'],
+            'meta': {
+                'isNew': False,
+                'isDeleted': False,
+            }
         }
 
 

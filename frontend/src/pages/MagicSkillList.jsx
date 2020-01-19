@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import SimpleTable from '../components/SimpleTable';
 import axios from 'axios';
 
-function MagicSkillManager() {
+function MagicSkillList() {
 	const [magicSkills, setMagicSkills] = useState([]);
 
 	useEffect(() => {
@@ -18,8 +18,8 @@ function MagicSkillManager() {
 
 	return (
 		<>
-			<h1>Magic Skills</h1>
 			<SimpleTable
+				tableTitle='Magic Skills'
 				routeName='magicskill'
 				rowTitles={['ID', 'title']}
 				dataList={magicSkills}
@@ -28,4 +28,4 @@ function MagicSkillManager() {
 	);
 }
 
-export default MagicSkillManager;
+export default MagicSkillList;
