@@ -9,17 +9,24 @@ import {
 import { useDispatch, useSelector } from 'react-redux';
 import { withRouter } from 'react-router';
 
-import { deleteMagicSkill, addNewMagicSkill, updateMagicSkill } from '../api';
+import {
+	deleteMagicSkill,
+	addNewMagicSkill,
+	updateMagicSkill,
+} from '../../api';
 import {
 	fetchMagicSkill,
 	setSkillTitle,
 	resetMagicSkill,
-} from '../redux/actions/magicSkillActions';
+} from '../../redux/actions/magicSkillActions';
+import { commonServerAction } from '../../redux/actions/generalServerFunc';
 
 function CourseDetails(props) {
 	const classes = useStyles();
 
 	const state = useSelector(state => state.magicSkill);
+	const fetchingError = useSelector(state => state.global.fetchingError);
+
 	const dispatch = useDispatch();
 
 	const { isCreateMode, location, history } = props;
@@ -37,57 +44,56 @@ function CourseDetails(props) {
 
 	function handleSave() {
 		if (isCreateMode) {
-			addNewMagicSkill(state);
+			dispatch(commonServerAction(state, addNewMagicSkill));
+			if (!fetchingError) history.goBack();
 		} else {
-			updateMagicSkill(state);
+			dispatch(commonServerAction(state, updateMagicSkill));
 		}
 	}
-	const { title, loading } = state;
+
+	function handleDelete() {
+		dispatch(commonServerAction(magicSkillId, deleteMagicSkill));
+		if (!fetchingError) history.goBack();
+	}
+
+	const { title } = state;
 	return (
-		<>
-			{!loading && (
-				<Container component={Paper} className={classes.root}>
-					<div className={classes.titleContainer}>
-						<h1 className={classes.title}>
-							{isCreateMode
-								? 'Create Magic Skill'
-								: 'Edit Magic Skill'}
-						</h1>
-						{!isCreateMode && (
-							<Button
-								color='secondary'
-								onClick={() => {
-									deleteMagicSkill(magicSkillId);
-								}}
-								variant='contained'
-							>
-								Delete
-							</Button>
-						)}
-					</div>
-					<div className={classes.line}>
-						<TextField
-							label='Magic skill name'
-							variant='outlined'
-							value={title}
-							className={classes.textField}
-							onChange={e => {
-								dispatch(setSkillTitle(e.target.value));
-							}}
-						/>
-					</div>
-					<div className={classes.bottomBtnRow}>
-						<Button
-							variant='contained'
-							onClick={handleSave}
-							color='primary'
-						>
-							Save
-						</Button>
-					</div>
-				</Container>
-			)}
-		</>
+		<Container component={Paper} className={classes.root}>
+			<div className={classes.titleContainer}>
+				<h1 className={classes.title}>
+					{isCreateMode ? 'Create Magic Skill' : 'Edit Magic Skill'}
+				</h1>
+				{!isCreateMode && (
+					<Button
+						color='secondary'
+						onClick={handleDelete}
+						variant='contained'
+					>
+						Delete
+					</Button>
+				)}
+			</div>
+			<div className={classes.line}>
+				<TextField
+					label='Magic skill name'
+					variant='outlined'
+					value={title}
+					className={classes.textField}
+					onChange={e => {
+						dispatch(setSkillTitle(e.target.value));
+					}}
+				/>
+			</div>
+			<div className={classes.bottomBtnRow}>
+				<Button
+					variant='contained'
+					onClick={handleSave}
+					color='primary'
+				>
+					Save
+				</Button>
+			</div>
+		</Container>
 	);
 }
 

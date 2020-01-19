@@ -1,8 +1,14 @@
 import { createAction } from '@reduxjs/toolkit';
+
 import { getStudentById } from '../../api';
+import {
+	toggleLoading,
+	setFetchingError,
+	resetGlobalState,
+} from './globalActions';
+import { serverErrorMsg } from './errorMessage';
 
 const initStudent = createAction('INIT_STUDENT');
-const toggleLoading = createAction('TOGGLE_LOADING');
 export const setSkillLevel = createAction('UPDATE_SKILL_LEVEL');
 export const setSkill = createAction('UPDATE_STUDENT_SKILL');
 export const setFirstName = createAction('UPDATE_STUDENT_FNAME');
@@ -15,9 +21,14 @@ export const removeCourse = createAction('REMOVE_STUDENT_COURSE');
 export const resetStudent = createAction('RESET_STUDENT');
 
 export const fetchStudent = id => dispatch => {
+	dispatch(resetGlobalState());
 	dispatch(toggleLoading());
-	getStudentById(id).then(res => {
-		dispatch(initStudent(res.data));
-		dispatch(toggleLoading());
-	});
+	getStudentById(id)
+		.then(res => {
+			dispatch(initStudent(res.data));
+			dispatch(toggleLoading());
+		})
+		.catch(err => {
+			dispatch(setFetchingError(serverErrorMsg));
+		});
 };

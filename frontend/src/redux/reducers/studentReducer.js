@@ -1,7 +1,6 @@
 import { createReducer } from '@reduxjs/toolkit';
 
 const initialState = {
-	loading: false,
 	courses_of_interest: [],
 	first_name: '',
 	last_name: '',

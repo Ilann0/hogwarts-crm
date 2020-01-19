@@ -22,7 +22,7 @@ class CourseAssociation(db.Model):
     course_id = db.Column(db.Integer, db.ForeignKey('course.id', ondelete='CASCADE'), unique=False)
 
     student = db.relationship('Student', backref=db.backref('courses_of_interest', cascade='all, delete-orphan'))
-    course = db.relationship('Course', foreign_keys=[course_id])
+    course = db.relationship('Course', foreign_keys=[course_id], backref=db.backref('_', cascade='all, delete-orphan'))
 
 
 class Student(db.Model):

@@ -17,7 +17,7 @@ def update_student(data):
 
     db.session.commit()
 
-    return {"message": f"User {student.first_name} has successfully been updated."}, 200
+    return {"message": f"Student '{student.first_name}' has successfully been updated."}, 200
 
 
 @catch_errors
@@ -52,6 +52,21 @@ def dispatch_courses(student, courses):
         elif course['meta']['isNew']:
             add_course_to_student(student, course['id'])
 
+
+def update_course(data):
+    course = Course.query.filter_by(id=data['id']).one()
+    course.title = data['title']
+    db.session.commit()
+
+    return {"message": f"Course '{course.title}' has successfully been updated"}, 200
+
+
+def update_magic_skill(data):
+    skill = MagicSkill.query.filter_by(id=data['id']).one()
+    skill.title = data['title']
+    db.session.commit()
+
+    return {"message": f"Magic skill '{skill.title}' has successfully been updated"}, 200
 
 # @catch_errors
 # def change_student_first_name(student_id, new_name):

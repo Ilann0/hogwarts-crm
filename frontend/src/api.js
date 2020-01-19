@@ -5,6 +5,10 @@ const URL = 'http://127.0.0.1:5000';
 // ----------------------------------------------------
 // Students
 
+export function getStudents() {
+	return axios.get(URL + '/students');
+}
+
 export function getStudentById(id) {
 	return axios.get(URL + '/student/' + id);
 }
@@ -24,12 +28,12 @@ export function deleteStudent(id) {
 // ----------------------------------------------------
 // Courses
 
-export function addNewCourse(data) {
-	return axios.post(URL + '/course', data);
-}
-
 export function getCourses() {
 	return axios.get(URL + '/courses');
+}
+
+export function addNewCourse(data) {
+	return axios.post(URL + '/course', data);
 }
 
 export function getCourseById(id) {
@@ -60,7 +64,7 @@ export function addNewMagicSkill(data) {
 }
 
 export function updateMagicSkill(data) {
-	return axios.put(URL + '/magicskill');
+	return axios.put(URL + '/magicskill', data);
 }
 
 export function deleteMagicSkill(id) {

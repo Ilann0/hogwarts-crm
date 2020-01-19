@@ -17,12 +17,17 @@ import AssignmentIndIcon from '@material-ui/icons/AssignmentInd';
 import ClassIcon from '@material-ui/icons/Class';
 import LocalActivityIcon from '@material-ui/icons/LocalActivity';
 
+import LinearProgress from '@material-ui/core/LinearProgress';
+
 import MenuItemBox from './MenuItemBox';
+import Message from '../Message';
+import { useSelector } from 'react-redux';
 
 function MiniDrawer(props) {
 	const classes = useStyles();
 	const theme = useTheme();
 	const [open, setOpen] = React.useState(true);
+	const loading = useSelector(state => state.global.loading);
 
 	const handleDrawerOpen = () => {
 		setOpen(true);
@@ -58,6 +63,7 @@ function MiniDrawer(props) {
 						{title}
 					</Typography>
 				</Toolbar>
+				{loading && <LinearProgress color='secondary' />}
 			</AppBar>
 			<Drawer
 				variant='permanent'
@@ -101,6 +107,7 @@ function MiniDrawer(props) {
 				<div className={classes.toolbar} />
 				{children}
 			</main>
+			<Message />
 		</div>
 	);
 }

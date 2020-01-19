@@ -41,7 +41,7 @@ def get_students_by(*args, **kwargs):
     return student_schema.dump(students, many=True), 200
 
 
-# @catch_errors
+@catch_errors
 def get_student_by_id(student_id):
     student = Student.query.filter_by(id=student_id).one()
     return student_schema.dump(student), 200

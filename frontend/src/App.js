@@ -3,13 +3,13 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 
-import StudentDetails from './pages/StudentDetails';
-import StudentList from './pages/StudentList';
-import CourseList from './pages/CourseList';
-import MagicSkillList from './pages/MagicSkillList';
 import MiniDrawer from './components/Navigation/MiniDrawer';
-import CourseDetails from './pages/CourseDetails';
-import MagicSkillDetails from './pages/MagicSkillDetails';
+import StudentList from './pages/Student/StudentList';
+import StudentDetails from './pages/Student/StudentDetails';
+import CourseList from './pages/Course/CourseList';
+import CourseDetails from './pages/Course/CourseDetails';
+import MagicSkillList from './pages/MagicSkill/MagicSkillList';
+import MagicSkillDetails from './pages/MagicSkill/MagicSkillDetails';
 import './App.css';
 
 function App() {

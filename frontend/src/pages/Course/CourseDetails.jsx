@@ -9,17 +9,19 @@ import {
 import { useDispatch, useSelector } from 'react-redux';
 import { withRouter } from 'react-router';
 
-import { deleteCourse, addNewCourse, updateCourse } from '../api';
+import { deleteCourse, addNewCourse, updateCourse } from '../../api';
 import {
 	fetchCourse,
 	setCourseTitle,
 	resetCourse,
-} from '../redux/actions/CourseActions';
+} from '../../redux/actions/CourseActions';
+import { commonServerAction } from '../../redux/actions/generalServerFunc';
 
 function CourseDetails(props) {
 	const classes = useStyles();
 
 	const state = useSelector(state => state.course);
+	const fetchingError = useSelector(state => state.global.fetchingError);
 	const dispatch = useDispatch();
 
 	const { isCreateMode, location, history } = props;
@@ -37,57 +39,56 @@ function CourseDetails(props) {
 
 	function handleSave() {
 		if (isCreateMode) {
-			addNewCourse(state);
+			dispatch(commonServerAction(state, addNewCourse));
+			if (!fetchingError) history.goBack();
 		} else {
-			updateCourse(state);
+			dispatch(commonServerAction(state, updateCourse));
 		}
 	}
-	const { title, loading } = state;
+
+	function handleDelete() {
+		dispatch(commonServerAction(course_id, deleteCourse));
+		if (!fetchingError) history.goBack();
+	}
+
+	const { title } = state;
 	return (
-		<>
-			{!loading && (
-				<Container component={Paper} className={classes.root}>
-					<div className={classes.titleContainer}>
-						<h1 className={classes.title}>
-							{isCreateMode ? 'Create Course' : 'Edit Course'}
-						</h1>
-						{!isCreateMode && (
-							<Button
-								color='secondary'
-								onClick={() => {
-									deleteCourse(course_id);
-								}}
-								variant='contained'
-							>
-								Delete
-							</Button>
-						)}
-					</div>
-					{/* <form onSubmit={e => handleSubmit(e)}> */}
-					<div className={classes.line}>
-						<TextField
-							label='Course name'
-							variant='outlined'
-							value={title}
-							className={classes.textField}
-							onChange={e => {
-								dispatch(setCourseTitle(e.target.value));
-							}}
-						/>
-					</div>
-					{/* </form> */}
-					<div className={classes.bottomBtnRow}>
-						<Button
-							variant='contained'
-							onClick={handleSave}
-							color='primary'
-						>
-							Save
-						</Button>
-					</div>
-				</Container>
-			)}
-		</>
+		<Container component={Paper} className={classes.root}>
+			<div className={classes.titleContainer}>
+				<h1 className={classes.title}>
+					{isCreateMode ? 'Create Course' : 'Edit Course'}
+				</h1>
+				{!isCreateMode && (
+					<Button
+						color='secondary'
+						onClick={handleDelete}
+						variant='contained'
+					>
+						Delete
+					</Button>
+				)}
+			</div>
+			<div className={classes.line}>
+				<TextField
+					label='Course name'
+					variant='outlined'
+					value={title}
+					className={classes.textField}
+					onChange={e => {
+						dispatch(setCourseTitle(e.target.value));
+					}}
+				/>
+			</div>
+			<div className={classes.bottomBtnRow}>
+				<Button
+					variant='contained'
+					onClick={handleSave}
+					color='primary'
+				>
+					Save
+				</Button>
+			</div>
+		</Container>
 	);
 }
 

@@ -1,12 +1,12 @@
 from datetime import datetime
 import threading
+import time
 
 from flask import request, jsonify
 import flask_marshmallow
 import flask_sqlalchemy
 import flask_cors
 import flask
-
 import db
 
 PORT = 5000
@@ -70,7 +70,7 @@ def course():
         return db.add_new_course(data)
 
     elif request.method == 'PUT':
-        return 'Not yet implemented..'
+        return db.update_course(data)
 
 # DONE
 @app.route('/course/<int:id>', methods=['GET', 'DELETE'])
@@ -99,7 +99,7 @@ def add_magic_skill():
         return db.add_new_magic_skill(data)
 
     elif request.method == 'PUT':
-        return 'Not yet implemented..'
+        return db.update_magic_skill(data)
 
 # DONE
 @app.route('/magicskill/<int:id>', methods=['GET', 'DELETE'])

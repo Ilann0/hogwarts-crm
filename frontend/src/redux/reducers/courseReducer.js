@@ -1,8 +1,8 @@
 import { createReducer } from '@reduxjs/toolkit';
 
 const initialState = {
-	loading: false,
 	title: '',
+	id: 0,
 };
 
 export const courseReducer = createReducer(initialState, {
