@@ -35,7 +35,6 @@ def student():
         return db.add_new_student_with_props(data)
 
     elif request.method == 'PUT':
-        print(data)
         return db.update_student(data)
 
 # DONE
@@ -131,5 +130,5 @@ if __name__ == "__main__":
     #
     # db.db.rollback()
 
-    print(db.Student.query.get(1).courses_of_interest)
+    # print(db.Student.query.get(1).courses_of_interest)
     run_app()

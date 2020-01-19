@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { withRouter } from 'react-router-dom';
-import { makeStyles } from '@material-ui/core/styles';
-import { TextField, Container, Button, Paper } from '@material-ui/core';
 import { useSelector, useDispatch } from 'react-redux';
+import { makeStyles } from '@material-ui/core/styles';
+import { TextField, Container, Button, Paper, Chip } from '@material-ui/core';
 
 import SkillRow from '../../components/StudentDetails/SkillRow';
+import Dropdown from '../../components/StudentDetails/SkillRow/Dropdown';
+import { commonServerAction } from '../../redux/actions/generalServerFunc';
 import {
 	getSkills,
 	getCourses,
@@ -12,13 +14,14 @@ import {
 	updateStudent,
 	deleteStudent,
 } from '../../api';
-import { commonServerAction } from '../../redux/actions/generalServerFunc';
 import {
 	fetchStudent,
 	setFirstName,
 	setLastName,
 	addSkill,
 	resetStudent,
+	addCourse,
+	removeCourse,
 } from '../../redux/actions/studentActions';
 
 function StudentDetails(props) {
@@ -52,7 +55,7 @@ function StudentDetails(props) {
 	function handleSave() {
 		if (props.isCreateMode) {
 			dispatch(commonServerAction(state, addNewStudent));
-			if (!fetchingError) history.goBack();
+			if (!fetchingError) setTimeout(() => history.goBack(), 500);
 		} else {
 			dispatch(commonServerAction(state, updateStudent));
 		}
@@ -63,12 +66,30 @@ function StudentDetails(props) {
 		if (!fetchingError) history.goBack();
 	}
 
-	const {
-		first_name,
-		last_name,
-		magic_skills,
-		// courses_of_interest,
-	} = state;
+	// check if deleted -> if new don't pop elese leave it
+	function handleCourses(e, component) {
+		console.log(e, component);
+		if (e.target.value.indexOf(component.props.value) === -1)
+			dispatch(removeCourse(component.props.name));
+		else
+			dispatch(
+				addCourse({
+					title: component.props.value,
+					id: component.props.name,
+					meta: {
+						isNew: true,
+						isDeleted: false,
+					},
+				})
+			);
+	}
+
+	const courses_of_interest = state.courses_of_interest.filter(course => {
+		if (!course.meta.isDeleted) return course;
+		return false;
+	});
+
+	const { first_name, last_name, magic_skills } = state;
 	return (
 		<Container component={Paper} className={classes.root}>
 			<div className={classes.titleContainer}>
@@ -98,7 +119,6 @@ function StudentDetails(props) {
 				<TextField
 					label='Last name'
 					value={last_name}
-					// value={info.last_name}
 					variant='outlined'
 					className={classes.textField}
 					onChange={e => {
@@ -120,6 +140,27 @@ function StudentDetails(props) {
 						<></>
 					);
 				})}
+			<div className={classes.courseDrop}>
+				<Dropdown
+					title='Courses of interest'
+					useTitle
+					multiple
+					items={coursesList}
+					onChange={handleCourses}
+					initVal={courses_of_interest.map(c => c.title)}
+					renderValue={selected => (
+						<div className={classes.chips}>
+							{selected.map(value => (
+								<Chip
+									key={value + 'chip'}
+									label={value}
+									className={classes.chip}
+								/>
+							))}
+						</div>
+					)}
+				/>
+			</div>
 			<div className={classes.bottomBtnRow}>
 				<Button
 					variant='contained'
@@ -172,6 +213,11 @@ const useStyles = makeStyles(theme => ({
 		padding: theme.spacing(3),
 		paddingBottom: theme.spacing(1),
 		paddingTop: theme.spacing(4),
+	},
+	courseDrop: {
+		display: 'flex',
+		justifyContent: 'center',
+		marginTop: theme.spacing(3),
 	},
 }));
 

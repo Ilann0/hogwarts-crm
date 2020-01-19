@@ -12,7 +12,7 @@ export const studentReducer = createReducer(initialState, {
 		state.loading = !state.loading;
 	},
 	INIT_STUDENT: (state, action) => {
-		return { ...state, ...action.payload };
+		return { ...action.payload };
 	},
 	RESET_STUDENT: (state, action) => {
 		return initialState;
@@ -62,9 +62,25 @@ export const studentReducer = createReducer(initialState, {
 		else state.magic_skills.splice(action.payload, 1);
 	},
 	ADD_STUDENT_COURSE: (state, action) => {
-		state.courses_of_interest.append(action.payload);
+		let flag = true;
+		state.courses_of_interest.forEach(course => {
+			if (
+				course.id === action.payload.id &&
+				course.meta.isDeleted &&
+				!course.meta.isNew
+			) {
+				course.meta.isDeleted = false;
+				flag = false;
+			}
+		});
+		if (flag) state.courses_of_interest.push(action.payload);
 	},
 	REMOVE_STUDENT_COURSE: (state, action) => {
-		state.courses_of_interest.pop(action.payload);
+		state.courses_of_interest.forEach((course, index) => {
+			if (course.id === action.payload)
+				if (course.meta.isNew)
+					state.courses_of_interest.splice(index, 1);
+				else course.meta.isDeleted = true;
+		});
 	},
 });

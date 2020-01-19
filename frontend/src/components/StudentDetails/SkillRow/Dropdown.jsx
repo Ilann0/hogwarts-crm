@@ -14,6 +14,13 @@ const useStyles = makeStyles(theme => ({
 		marginTop: theme.spacing(2),
 		height: theme.spacing(5),
 	},
+	chips: {
+		display: 'flex',
+		flexWrap: 'wrap',
+	},
+	chip: {
+		margin: 2,
+	},
 }));
 
 function Dropdown(props) {
@@ -24,6 +31,7 @@ function Dropdown(props) {
 		items = [],
 		emptySelect = false,
 		initVal,
+		useTitle,
 		...rest
 	} = props;
 	return (
@@ -35,16 +43,19 @@ function Dropdown(props) {
 				value={initVal}
 				{...rest}
 			>
-				{emptySelect && (
+				{emptySelect ? (
 					<MenuItem value={false} className={classes.selectEmpty}>
 						<em></em>
 					</MenuItem>
+				) : (
+					<></>
 				)}
 				{items.map(item => (
 					<MenuItem
 						key={item.title + item.id}
-						value={item.id}
+						value={useTitle ? item.title : item.id}
 						id={item.title}
+						name={item.id}
 					>
 						{item.title}
 					</MenuItem>

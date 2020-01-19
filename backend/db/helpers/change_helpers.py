@@ -5,7 +5,7 @@ from db.helpers.add_helpers import add_course_to_student, add_skill_to_student
 from datetime import datetime
 
 
-@catch_errors
+# @catch_errors
 def update_student(data):
     student = Student.query.filter_by(id=data['id']).one()
 
@@ -14,22 +14,9 @@ def update_student(data):
     dispatch_courses(student, data['courses_of_interest'])
 
     student.last_update = datetime.now()
-
     db.session.commit()
 
     return {"message": f"Student '{student.first_name}' has successfully been updated."}, 200
-
-
-@catch_errors
-def update_student_skill(student_id, skill_id, skill_level, skill_category):
-    association = MagicSkillAssociation.query.filter_by(student_id=student_id, skill_id=skill_id, skill_category=skill_category).one()
-    association.skill_level = skill_level
-    association.skill_category = skill_category
-
-
-def dispatch_personal_info(student, first_name, last_name):
-    student.first_name = first_name
-    student.last_name = last_name
 
 
 @catch_errors
@@ -44,13 +31,25 @@ def dispatch_magic_skills(student, magic_skills):
                 update_student_skill(student.id, magic_skill['id'], magic_skill['skill_level'], magic_skill['skill_category'])
 
 
-@catch_errors
+# @catch_errors
 def dispatch_courses(student, courses):
     for course in courses:
         if course['meta']['isDeleted']:
             delete_course_from_student(student.id, course['id'])
         elif course['meta']['isNew']:
             add_course_to_student(student, course['id'])
+
+
+def dispatch_personal_info(student, first_name, last_name):
+    student.first_name = first_name
+    student.last_name = last_name
+
+
+@catch_errors
+def update_student_skill(student_id, skill_id, skill_level, skill_category):
+    association = MagicSkillAssociation.query.filter_by(student_id=student_id, skill_id=skill_id, skill_category=skill_category).one()
+    association.skill_level = skill_level
+    association.skill_category = skill_category
 
 
 def update_course(data):

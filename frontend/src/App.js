@@ -30,14 +30,11 @@ function App() {
 		[prefersDarkMode]
 	);
 	return (
-		<Router>
-			<ThemeProvider theme={theme}>
+		<ThemeProvider theme={theme}>
+			<Router>
 				<MiniDrawer title='Hogwarts Management'>
 					<Switch>
 						<Route exact path='/'>
-							Home
-						</Route>
-						<Route exact path='/dashboard'>
 							Dashboard
 						</Route>
 						<Route exact path='/students'>
@@ -69,8 +66,8 @@ function App() {
 						</Route>
 					</Switch>
 				</MiniDrawer>
-			</ThemeProvider>
-		</Router>
+			</Router>
+		</ThemeProvider>
 	);
 }
 
