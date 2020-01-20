@@ -32,10 +32,14 @@ function Dropdown(props) {
 		emptySelect = false,
 		initVal,
 		useTitle,
+		selectClassName = '',
 		...rest
 	} = props;
 	return (
-		<FormControl variant='filled' className={classes.formControl}>
+		<FormControl
+			variant='filled'
+			className={classes.formControl + ' ' + selectClassName}
+		>
 			<InputLabel id={'select-field-label' + title}>{title}</InputLabel>
 			<Select
 				labelId='select-field-label'

@@ -32,17 +32,11 @@ def delete_course(id):
 # Associations
 
 
-# @catch_errors
 def delete_course_from_student(student_id, course_id):
     assoc = CourseAssociation.query.filter_by(student_id=student_id, course_id=course_id).one()
     db.session.delete(assoc)
 
-    # return {'message': f"Course with ID: '{course_id}' has successfully been deleted from sutdent with ID: '{student_id}'."}
 
-
-@catch_errors
 def delete_skill_from_student(student_id, skill_id):
     mAssoc = MagicSkillAssociation.query.filter_by(student_id=student_id, skill_id=skill_id).one()
     db.session.delete(mAssoc)
-
-    # return {'message': f"Skill with ID: '{skill_id}' has successfully been deleted from sutdent with ID: '{student_id}'"}

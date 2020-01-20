@@ -40,7 +40,6 @@ export const studentReducer = createReducer(initialState, {
 		};
 	},
 	ADD_STUDENT_SKILL: (state, _) => {
-		// console.log(state.magic_skills);
 		state.magic_skills.push({
 			id: '',
 			skill_level: 1,

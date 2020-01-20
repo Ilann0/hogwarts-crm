@@ -26,7 +26,7 @@ marshmallow = flask_marshmallow.Marshmallow(app=app)
 # ----------------------------------------------------------------------------------------------------------------
 # Students
 
-# TODO
+# DONE
 @app.route('/student', methods=['POST', 'PUT'])
 def student():
     data = request.get_json()
@@ -60,7 +60,7 @@ def students():
 # Courses
 
 
-# TODO
+# DONE
 @app.route('/course', methods=['POST', 'PUT'])
 def course():
     data = request.get_json()
@@ -89,7 +89,7 @@ def courses():
 # Magic Skills
 
 
-# TODO
+# DONE
 @app.route('/magicskill', methods=['POST', 'PUT'])
 def add_magic_skill():
     data = request.get_json()
@@ -127,8 +127,4 @@ if __name__ == "__main__":
         db.init_database()
         print('Created DB')
 
-    #
-    # db.db.rollback()
-
-    # print(db.Student.query.get(1).courses_of_interest)
     run_app()

@@ -89,7 +89,7 @@ function MiniDrawer(props) {
 				</div>
 				<Divider />
 				<List>
-					<MenuItemBox text='Dashboard' path='/dashboard'>
+					<MenuItemBox text='Dashboard' path='/'>
 						<DashboardIcon />
 					</MenuItemBox>
 					<MenuItemBox text='Students' path='/students'>

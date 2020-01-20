@@ -20,26 +20,6 @@ def catch_errors(func):
             return {'message': 'One or more parameters are missing or incorect'}, 400
 
         except Exception as error:
-            print(str(error))
             return {'message': 'Unknown error, please call an adult to handle the situation'}, 400
 
     return wrapped_func
-
-
-# {
-#     "first_name": "John",
-#     "last_name": "Doe",
-#     "courses": [1, 2, 3],
-#     "magic_skills": [
-#         {
-#             "id": 1,
-#             "level": 3,
-#             "category": "desired"
-#         },
-#         {
-#             "id": 2,
-#             "level": 5,
-#             "category": "aquired"
-#         }
-#     ]
-# }

@@ -66,7 +66,6 @@ function StudentDetails(props) {
 		if (!fetchingError) history.goBack();
 	}
 
-	// check if deleted -> if new don't pop elese leave it
 	function handleCourses(e, component) {
 		console.log(e, component);
 		if (e.target.value.indexOf(component.props.value) === -1)
@@ -126,7 +125,7 @@ function StudentDetails(props) {
 					}}
 				/>
 			</div>
-			{magic_skills &&
+			{magic_skills.length >= 1 ? (
 				magic_skills.map((skill, index) => {
 					return !skill.meta.isDeleted ? (
 						<SkillRow
@@ -139,7 +138,10 @@ function StudentDetails(props) {
 					) : (
 						<></>
 					);
-				})}
+				})
+			) : (
+				<h1 className={classes.noMAtext}>No magic skill to show..</h1>
+			)}
 			<div className={classes.courseDrop}>
 				<Dropdown
 					title='Courses of interest'
@@ -148,6 +150,7 @@ function StudentDetails(props) {
 					items={coursesList}
 					onChange={handleCourses}
 					initVal={courses_of_interest.map(c => c.title)}
+					selectClassName={classes.courseDropSelect}
 					renderValue={selected => (
 						<div className={classes.chips}>
 							{selected.map(value => (
@@ -218,6 +221,14 @@ const useStyles = makeStyles(theme => ({
 		display: 'flex',
 		justifyContent: 'center',
 		marginTop: theme.spacing(3),
+	},
+	noMAtext: {
+		textAlign: 'center',
+		marginTop: theme.spacing(5),
+		opacity: '0.2',
+	},
+	courseDropSelect: {
+		minWidth: '100%',
 	},
 }));
 

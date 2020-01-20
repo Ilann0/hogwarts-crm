@@ -22,7 +22,7 @@ def add_new_student_with_props(data):
 def add_new_student(first_name, last_name):
     student = Student(first_name=first_name.capitalize(), last_name=last_name.capitalize())
     db.session.add(student)
-    db.session.commit()
+
     return student
 
 
@@ -31,6 +31,7 @@ def add_new_course(data):
     course = Course(title=data['title'].capitalize())
     db.session.add(course)
     db.session.commit()
+
     return {'message': f"Course '{course.title}' has successfully been created"}, 201
 
 
@@ -39,6 +40,7 @@ def add_new_magic_skill(data):
     magic_skill = MagicSkill(title=data['title'].capitalize())
     db.session.add(magic_skill)
     db.session.commit()
+
     return {'message': f"Magic skill '{magic_skill.title}' has successfully been created"}, 201
 
 
