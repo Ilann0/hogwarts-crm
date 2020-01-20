@@ -44,7 +44,7 @@ def update_personal_info(student, first_name, last_name):
 
 
 def update_student_skill(student_id, skill_id, skill_level, skill_category):
-    association = MagicSkillAssociation.query.filter_by(student_id=student_id, skill_id=skill_id, skill_category=skill_category).one()
+    association = MagicSkillAssociation.query.filter_by(student_id=student_id, skill_id=skill_id, skill_category=skill_category).first()
     association.skill_level = skill_level
     association.skill_category = skill_category
 

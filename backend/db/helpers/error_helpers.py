@@ -1,5 +1,6 @@
 import sqlalchemy
-from app import database as db
+
+from db import db
 
 
 def catch_errors(func):

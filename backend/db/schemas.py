@@ -1,6 +1,9 @@
 from .models import MagicSkillAssociation, Student, MagicSkill, Course, CourseAssociation
-from app import marshmallow as ma
 from marshmallow import fields, post_dump
+
+import flask_marshmallow
+
+ma = flask_marshmallow.Marshmallow()
 
 
 class MagicSkillSchema(ma.ModelSchema):

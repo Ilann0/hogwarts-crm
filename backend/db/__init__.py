@@ -1,5 +1,5 @@
 from .models import db
-from .schemas import StudentSchema, CourseSchema, MagicSkillSchema, MagicSkillAssociationSchema
+from .schemas import StudentSchema, CourseSchema, MagicSkillSchema, MagicSkillAssociationSchema, ma
 from .helpers import *
 from .initial_data import courses, magic_skills
 

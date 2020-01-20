@@ -14,13 +14,15 @@ HOST = 'localhost'
 DEBUG = True
 
 app = flask.Flask(__name__)
-flask_cors.CORS(app)
+
 
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db/db.sqlite3'
 
-database = flask_sqlalchemy.SQLAlchemy(app=app)
-marshmallow = flask_marshmallow.Marshmallow(app=app)
+db.db.init_app(app)
+db.ma.init_app(app)
+
+flask_cors.CORS(app)
 
 
 # ----------------------------------------------------------------------------------------------------------------
@@ -124,4 +126,5 @@ if __name__ == "__main__":
         db.init_database()
         print('Created DB')
 
+# comment out on deploy
     run_app()

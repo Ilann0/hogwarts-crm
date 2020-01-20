@@ -2,7 +2,7 @@ from datetime import datetime
 
 import flask_sqlalchemy
 
-from app import database as db
+db = flask_sqlalchemy.SQLAlchemy()
 
 
 class MagicSkillAssociation(db.Model):

@@ -38,5 +38,5 @@ def delete_course_from_student(student_id, course_id):
 
 
 def delete_skill_from_student(student_id, skill_id, skill_category):
-    mAssoc = MagicSkillAssociation.query.filter_by(student_id=student_id, skill_id=skill_id, skill_category=skill_category).one()
+    mAssoc = MagicSkillAssociation.query.filter_by(student_id=student_id, skill_id=skill_id, skill_category=skill_category).first()
     db.session.delete(mAssoc)
