@@ -23,7 +23,7 @@ def dispatch_magic_skills(student, magic_skills):
     for magic_skill in magic_skills:
         if magic_skill['meta']:
             if magic_skill['meta']['isDeleted']:
-                delete_skill_from_student(student.id, magic_skill['id'])
+                delete_skill_from_student(student.id, magic_skill['id'], magic_skill['skill_category'])
             elif magic_skill['meta']['isNew']:
                 add_skill_to_student(student, magic_skill['id'], magic_skill['skill_level'], magic_skill['skill_category'])
             elif magic_skill['meta']['isModified']:

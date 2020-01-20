@@ -26,7 +26,8 @@ export const studentReducer = createReducer(initialState, {
 	UPDATE_SKILL_LEVEL: (state, action) => {
 		const { index, data } = action.payload;
 		state.magic_skills[index]['skill_level'] = data;
-		state.magic_skills[index]['meta']['isModified'] = true;
+		if (!state.magic_skills[index]['meta']['isNew'])
+			state.magic_skills[index]['meta']['isModified'] = true;
 	},
 	UPDATE_STUDENT_SKILL: (state, action) => {
 		const { index, data } = action.payload;
@@ -34,7 +35,9 @@ export const studentReducer = createReducer(initialState, {
 			...state.magic_skills[index],
 			meta: {
 				...state.magic_skills[index]['meta'],
-				isModified: true,
+				isModified: !state.magic_skills[index]['meta']['isNew']
+					? true
+					: false,
 			},
 			...data,
 		};

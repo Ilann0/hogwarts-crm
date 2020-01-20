@@ -37,20 +37,19 @@ function StudentDetails(props) {
 	const student_id = parseInt(location.pathname.split('/')[2]);
 
 	useEffect(() => {
+		if (!props.isCreateMode) {
+			dispatch(fetchStudent(student_id));
+		}
 		getSkills().then(res => {
 			setSkillsList(res.data);
 		});
 		getCourses().then(res => {
 			setCoursesList(res.data);
 		});
-
-		if (!props.isCreateMode) {
-			dispatch(fetchStudent(student_id));
-		}
 		return () => {
 			dispatch(resetStudent());
 		};
-	}, [student_id, dispatch, props.isCreateMode]);
+	}, []);
 
 	function handleSave() {
 		if (props.isCreateMode) {
@@ -63,7 +62,7 @@ function StudentDetails(props) {
 
 	function handleDelete() {
 		dispatch(commonServerAction(student_id, deleteStudent));
-		if (!fetchingError) history.goBack();
+		if (!fetchingError) setTimeout(() => history.goBack(), 500);
 	}
 
 	function handleCourses(e, component) {

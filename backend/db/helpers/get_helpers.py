@@ -42,7 +42,7 @@ def get_students_by(*args, **kwargs):
 @catch_errors
 def get_student_by_id(student_id):
     student = Student.query.filter_by(id=student_id).one()
-
+    print('>>', len(student_schema.dump(student)['magic_skills']))
     return student_schema.dump(student), 200
 
 

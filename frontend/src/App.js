@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 
+import Dashboard from './pages/Dashboard';
 import MiniDrawer from './components/Navigation/MiniDrawer';
 import StudentList from './pages/Student/StudentList';
 import StudentDetails from './pages/Student/StudentDetails';
@@ -36,6 +37,7 @@ function App() {
 					<Switch>
 						<Route exact path='/'>
 							Dashboard
+							<Dashboard />
 						</Route>
 						<Route exact path='/students'>
 							<StudentList />

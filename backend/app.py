@@ -26,7 +26,6 @@ marshmallow = flask_marshmallow.Marshmallow(app=app)
 # ----------------------------------------------------------------------------------------------------------------
 # Students
 
-# DONE
 @app.route('/student', methods=['POST', 'PUT'])
 def student():
     data = request.get_json()
@@ -37,7 +36,7 @@ def student():
     elif request.method == 'PUT':
         return db.update_student(data)
 
-# DONE
+
 @app.route('/student/<int:id>', methods=['GET', 'DELETE'])
 def student_id(id):
     if request.method == 'GET':
@@ -46,12 +45,12 @@ def student_id(id):
     elif request.method == 'DELETE':
         return db.delete_student(id)
 
-# DONE
+
 @app.route('/students/detailed')
 def students_detailed():
     return db.get_all_students_detailed()
 
-# DONE
+
 @app.route('/students')
 def students():
     return jsonify(db.get_all_students())
@@ -60,7 +59,6 @@ def students():
 # Courses
 
 
-# DONE
 @app.route('/course', methods=['POST', 'PUT'])
 def course():
     data = request.get_json()
@@ -71,7 +69,7 @@ def course():
     elif request.method == 'PUT':
         return db.update_course(data)
 
-# DONE
+
 @app.route('/course/<int:id>', methods=['GET', 'DELETE'])
 def course_id(id):
     if request.method == 'GET':
@@ -80,7 +78,7 @@ def course_id(id):
     elif request.method == 'DELETE':
         return db.delete_course(id)
 
-# DONE
+
 @app.route('/courses', methods=['GET'])
 def courses():
     return jsonify(db.get_all_courses())
@@ -89,7 +87,6 @@ def courses():
 # Magic Skills
 
 
-# DONE
 @app.route('/magicskill', methods=['POST', 'PUT'])
 def add_magic_skill():
     data = request.get_json()
@@ -100,7 +97,7 @@ def add_magic_skill():
     elif request.method == 'PUT':
         return db.update_magic_skill(data)
 
-# DONE
+
 @app.route('/magicskill/<int:id>', methods=['GET', 'DELETE'])
 def magic_skill_id(id):
     if request.method == 'GET':
@@ -109,7 +106,7 @@ def magic_skill_id(id):
     elif request.method == 'DELETE':
         return db.delete_magic_skill(id)
 
-# DONE
+
 @app.route('/magicskills', methods=['GET'])
 def magic_skills():
     return jsonify(db.get_all_magic_skills())

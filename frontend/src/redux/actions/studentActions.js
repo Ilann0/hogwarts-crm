@@ -25,6 +25,7 @@ export const fetchStudent = id => dispatch => {
 	dispatch(toggleLoading());
 	getStudentById(id)
 		.then(res => {
+			console.log(res.data);
 			dispatch(initStudent(res.data));
 			dispatch(toggleLoading());
 		})
