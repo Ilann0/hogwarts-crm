@@ -8,9 +8,9 @@ simple_student_schema = StudentSchema(only=('id', 'first_name', 'last_name', 'da
 
 student_schema = StudentSchema()
 
-course_schema = CourseSchema()
+course_schema = CourseSchema(only=('id', 'title'))
 
-magic_skill_schema = MagicSkillSchema()
+magic_skill_schema = MagicSkillSchema(only=('id', 'title'))
 
 magic_skill_assoc_schema = MagicSkillAssociationSchema()
 

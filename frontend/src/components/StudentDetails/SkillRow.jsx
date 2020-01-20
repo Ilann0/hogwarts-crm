@@ -71,6 +71,7 @@ function SkillRow(props) {
 		],
 		initDropTwo = '',
 		index,
+		isNew,
 	} = props;
 	return (
 		<div className={classes.skillRow}>
@@ -78,6 +79,7 @@ function SkillRow(props) {
 				title={dropOneTitle}
 				items={dropOneItems}
 				initVal={initDropOne}
+				disabled={!isNew}
 				emptySelect
 				onChange={handleDropDownOne}
 			/>

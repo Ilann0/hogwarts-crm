@@ -128,6 +128,7 @@ function StudentDetails(props) {
 				magic_skills.map((skill, index) => {
 					return !skill.meta.isDeleted ? (
 						<SkillRow
+							isNew={skill.meta.isNew}
 							initSlider={skill.skill_level}
 							dropOneItems={skillsList}
 							initDropOne={skill.id}

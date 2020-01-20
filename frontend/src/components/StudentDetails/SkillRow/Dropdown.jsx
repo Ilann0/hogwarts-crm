@@ -33,15 +33,19 @@ function Dropdown(props) {
 		initVal,
 		useTitle,
 		selectClassName = '',
+		disabled = false,
 		...rest
 	} = props;
+	console.log(disabled);
 	return (
 		<FormControl
 			variant='filled'
 			className={classes.formControl + ' ' + selectClassName}
+			disabled
 		>
 			<InputLabel id={'select-field-label' + title}>{title}</InputLabel>
 			<Select
+				disabled={disabled}
 				labelId='select-field-label'
 				id='select'
 				value={initVal}
