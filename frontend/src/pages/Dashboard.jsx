@@ -61,7 +61,6 @@ function Dashboard() {
 			<div className={classes.container}>
 				<Card className={classes.topCard}>
 					<CardHeader title={'Added students / Month'} />
-					<CardHeader title={'Students / Course'} />
 					<CardContent className={classes.card}>
 						<ResponsiveContainer width='100%' height={300}>
 							<AreaChart
