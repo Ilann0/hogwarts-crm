@@ -43,7 +43,6 @@ function MiniDrawer(props) {
 	useEffect(() => {
 		let title = location.pathname.split('/')[1];
 		title = title ? ' - ' + title[0].toUpperCase() + title.slice(1) : '';
-		console.log(location, title);
 		document.getElementById('TITLE').innerText = 'Hogwarts CRM' + title;
 	}, [location]);
 

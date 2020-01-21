@@ -3,14 +3,14 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 
-import Dashboard from './pages/Dashboard';
-import MiniDrawer from './components/Navigation/MiniDrawer';
-import StudentList from './pages/Student/StudentList';
-import StudentDetails from './pages/Student/StudentDetails';
-import CourseList from './pages/Course/CourseList';
-import CourseDetails from './pages/Course/CourseDetails';
-import MagicSkillList from './pages/MagicSkill/MagicSkillList';
 import MagicSkillDetails from './pages/MagicSkill/MagicSkillDetails';
+import MagicSkillList from './pages/MagicSkill/MagicSkillList';
+import MiniDrawer from './components/Navigation/MiniDrawer';
+import StudentDetails from './pages/Student/StudentDetails';
+import CourseDetails from './pages/Course/CourseDetails';
+import StudentList from './pages/Student/StudentList';
+import CourseList from './pages/Course/CourseList';
+import Dashboard from './pages/Dashboard';
 import './App.css';
 
 function App(props) {
@@ -19,7 +19,7 @@ function App(props) {
 		() =>
 			createMuiTheme({
 				palette: {
-					type: prefersDarkMode ? 'dark' : 'light',
+					type: prefersDarkMode ? 'dark' : 'dark',
 					primary: {
 						main: '#648dae',
 					},

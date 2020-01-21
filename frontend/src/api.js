@@ -1,7 +1,6 @@
 import axios from 'axios';
 
-// const URL = 'https://hogwarts-crm-for-magic-api.herokuapp.com';
-const URL = 'http://127.0.0.1:5000';
+const URL = 'https://hogwarts-crm-for-magic-api.herokuapp.com';
 
 // ----------------------------------------------------
 // Students

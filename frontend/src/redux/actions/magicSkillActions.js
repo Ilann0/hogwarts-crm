@@ -1,8 +1,8 @@
 import { createAction } from '@reduxjs/toolkit';
 
-import { getSkillById } from '../../api';
 import { toggleLoading, setFetchingError } from './globalActions';
 import { serverErrorMsg } from './errorMessage';
+import { getSkillById } from '../../api';
 
 export const initMagicSkill = createAction('INIT_MAGIC_SKILL');
 export const setSkillTitle = createAction('UPDATE_MAGIC_SKILL');

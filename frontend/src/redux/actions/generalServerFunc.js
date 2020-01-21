@@ -1,10 +1,10 @@
+import { serverErrorMsg } from './errorMessage';
 import {
 	setFetchingError,
 	setServerMsg,
 	toggleLoading,
 	resetGlobalState,
 } from './globalActions';
-import { serverErrorMsg } from './errorMessage';
 
 export const commonServerAction = (data, func) => dispatch => {
 	dispatch(resetGlobalState());

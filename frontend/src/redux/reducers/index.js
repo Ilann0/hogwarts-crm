@@ -1,6 +1,6 @@
+import { magicSkillReducer } from './magicSkillReducer';
 import { studentReducer } from './studentReducer';
 import { courseReducer } from './courseReducer';
-import { magicSkillReducer } from './magicSkillReducer';
 import { globalReducer } from './globalReducer';
 import { combineReducers } from 'redux';
 

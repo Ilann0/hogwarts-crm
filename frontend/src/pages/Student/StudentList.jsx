@@ -3,12 +3,11 @@ import { useDispatch } from 'react-redux';
 
 import SimpleTable from '../../components/SimpleTable';
 import { getStudents } from '../../api';
+import { serverErrorMsg } from '../../redux/actions/errorMessage';
 import {
 	setFetchingError,
 	toggleLoading,
-	// resetGlobalState,
 } from '../../redux/actions/globalActions';
-import { serverErrorMsg } from '../../redux/actions/errorMessage';
 
 function StudentList() {
 	const [students, setStudents] = useState([]);

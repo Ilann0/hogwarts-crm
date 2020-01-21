@@ -1,12 +1,12 @@
 import { createAction } from '@reduxjs/toolkit';
 
+import { serverErrorMsg } from './errorMessage';
 import { getStudentById } from '../../api';
 import {
 	toggleLoading,
 	setFetchingError,
 	resetGlobalState,
 } from './globalActions';
-import { serverErrorMsg } from './errorMessage';
 
 const initStudent = createAction('INIT_STUDENT');
 export const setSkillLevel = createAction('UPDATE_SKILL_LEVEL');

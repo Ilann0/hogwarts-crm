@@ -1,4 +1,6 @@
 import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { withRouter } from 'react-router';
 import {
 	makeStyles,
 	Button,
@@ -6,16 +8,14 @@ import {
 	TextField,
 	Paper,
 } from '@material-ui/core';
-import { useDispatch, useSelector } from 'react-redux';
-import { withRouter } from 'react-router';
 
 import { deleteCourse, addNewCourse, updateCourse } from '../../api';
+import { commonServerAction } from '../../redux/actions/generalServerFunc';
 import {
 	fetchCourse,
 	setCourseTitle,
 	resetCourse,
 } from '../../redux/actions/CourseActions';
-import { commonServerAction } from '../../redux/actions/generalServerFunc';
 
 function CourseDetails(props) {
 	const classes = useStyles();
