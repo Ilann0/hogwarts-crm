@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import clsx from 'clsx';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
@@ -22,6 +22,7 @@ import LinearProgress from '@material-ui/core/LinearProgress';
 import MenuItemBox from './MenuItemBox';
 import Message from '../Message';
 import { useSelector } from 'react-redux';
+import { withRouter } from 'react-router';
 
 function MiniDrawer(props) {
 	const classes = useStyles();
@@ -37,7 +38,15 @@ function MiniDrawer(props) {
 		setOpen(false);
 	};
 
-	const { title = 'CRM', children = 'No content' } = props;
+	const { title = 'CRM', children = 'No content', location } = props;
+
+	useEffect(() => {
+		let title = location.pathname.split('/')[1];
+		title = title ? ' - ' + title[0].toUpperCase() + title.slice(1) : '';
+		console.log(location, title);
+		document.getElementById('TITLE').innerText = 'Hogwarts CRM' + title;
+	}, [location]);
+
 	return (
 		<div className={classes.root}>
 			<CssBaseline />
@@ -178,4 +187,4 @@ const useStyles = makeStyles(theme => ({
 	},
 }));
 
-export default MiniDrawer;
+export default withRouter(MiniDrawer);

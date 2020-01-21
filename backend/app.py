@@ -114,6 +114,25 @@ def magic_skills():
     return jsonify(db.get_all_magic_skills())
 
 
+# ----------------------------------------------------------------------------------------------------------------
+# Statistics
+
+
+@app.route('/stats/students')
+def students_stats():
+    return jsonify(db.get_students_added_per_month())
+
+
+@app.route('/stats/courses')
+def courses_stats():
+    return jsonify(db.get_course_student_counts())
+
+
+@app.route('/stats/magicskills')
+def magic_skills_stats():
+    return jsonify(db.get_magic_skill_student_counts())
+
+
 def run_app():
     app.run(debug=DEBUG, use_reloader=True, port=PORT, host=HOST)
 

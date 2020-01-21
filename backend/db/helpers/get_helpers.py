@@ -1,5 +1,6 @@
+from sqlalchemy import funcfilter, func
 from db.schemas import StudentSchema, CourseSchema, MagicSkillSchema, MagicSkillAssociationSchema
-from db.models import db, Student, Course, MagicSkill, MagicSkillAssociation
+from db.models import db, Student, Course, MagicSkill, MagicSkillAssociation, CourseAssociation
 from db.helpers.error_helpers import catch_errors
 # ----------------------------------------------------------------------------------------------------------------
 # Schemas
@@ -78,3 +79,46 @@ def get_course_by_id(course_id):
     course = Course.query.filter_by(id=course_id).one()
 
     return course_schema.dump(course)
+
+
+def get_course_student_counts():
+    courses_counts = db.session.query(Course.title, db.func.count(CourseAssociation.course_id))\
+        .outerjoin(CourseAssociation, CourseAssociation.course_id == Course.id)\
+        .group_by(Course.title).all()
+
+    return [
+        {
+            'title': course[0],
+            'numOfStudents': course[1]
+        } for course in courses_counts
+    ]
+
+
+def get_magic_skill_student_counts():
+    magic_skills = db.session.query(MagicSkill.title, db.func.count(MagicSkillAssociation.skill_id))\
+        .outerjoin(MagicSkillAssociation, MagicSkillAssociation.skill_id == MagicSkill.id)\
+        .group_by(MagicSkill.title).all()
+
+    return [
+        {
+            'title': ma[0],
+            'numOfStudents': ma[1],
+        } for ma in magic_skills
+    ]
+
+
+months = [
+    'January', 'February', 'March', 'April', 'May',
+    'June', 'July', 'August', 'September',
+    'October', 'November', 'December'
+]
+
+
+def get_students_added_per_month():
+    counts = db.session.query(db.func.count(Student.id)).group_by(db.func.strftime("%m", Student.date_created)).all()
+
+    return [
+        {
+            'month': months[i],
+            'numOfStudents': counts[i][0],
+        } for i in range(12)]

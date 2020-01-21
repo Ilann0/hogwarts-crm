@@ -1,16 +1,133 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import React, { useState, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { Card, CardContent, CardHeader, makeStyles } from '@material-ui/core';
+import {
+	RadarChart,
+	PolarGrid,
+	PolarAngleAxis,
+	PolarRadiusAxis,
+	Radar,
+	ResponsiveContainer,
+} from 'recharts';
 
-export default function Dashboard() {
-	const [na, setNa] = useState('');
-	useEffect(() => {
-		axios
-			.get('http://127.0.0.1:5000/student/1')
+import { getStats } from '../api';
+import { serverErrorMsg } from '../redux/actions/errorMessage';
+import {
+	setFetchingError,
+	toggleLoading,
+} from '../redux/actions/globalActions';
+
+function Dashboard() {
+	const classes = useStyles();
+	const [courses, setCourses] = useState([]);
+	const [magicSkills, setMagicSkills] = useState([]);
+	const [students, setStudents] = useState([]);
+	const dispatch = useDispatch();
+
+	const domain_max_courses =
+		Math.ceil(Math.max(...courses.map(c => c.numOfStudents)) / 100) * 100;
+
+	const domain_max_mas =
+		Math.ceil(Math.max(...magicSkills.map(ma => ma.numOfStudents)) / 100) *
+		100;
+
+	function fetchAndSetData(from, using) {
+		getStats(from)
 			.then(res => {
-				console.log(res);
-				setNa(res.data.message);
+				using(res.data);
 			})
-			.catch(err => console.log(err));
+			.catch(() => {
+				dispatch(setFetchingError(serverErrorMsg));
+			});
+	}
+
+	useEffect(() => {
+		dispatch(toggleLoading());
+		fetchAndSetData('courses', setCourses);
+		fetchAndSetData('magicskills', setMagicSkills);
+		fetchAndSetData('students', setStudents);
+		dispatch(toggleLoading());
 	}, []);
-	return <div>{na}</div>;
+
+	return (
+		<>
+			<h1>Dashboard</h1>
+			<div className={classes.container}>
+				<Card className={classes.topCard}>
+					<CardHeader title={'Added students / Month'} />
+				</Card>
+				<Card>
+					<CardHeader title={'Students / Course'} />
+					<CardContent className={classes.card}>
+						<ResponsiveContainer width='100%' height={300}>
+							<RadarChart outerRadius={130} data={courses}>
+								<PolarGrid />
+								<PolarAngleAxis dataKey='title' />
+								<PolarRadiusAxis
+									angle={90}
+									domain={[0, domain_max_courses]}
+								/>
+								<Radar
+									name='Courses'
+									dataKey='numOfStudents'
+									stroke='#8884d8'
+									fill='#8884d8'
+									fillOpacity={0.6}
+								/>
+							</RadarChart>
+						</ResponsiveContainer>
+					</CardContent>
+				</Card>
+				<Card>
+					<CardHeader title={'Students / Magic Skill'} />
+					<CardContent className={classes.card}>
+						<ResponsiveContainer width='100%' height={300}>
+							<RadarChart outerRadius={130} data={magicSkills}>
+								<PolarGrid />
+								<PolarAngleAxis dataKey='title' />
+								<PolarRadiusAxis
+									angle={90}
+									domain={[0, domain_max_mas]}
+								/>
+								<Radar
+									dataKey='numOfStudents'
+									stroke='#8884d8'
+									fill='#8884d8'
+									fillOpacity={0.6}
+								/>
+							</RadarChart>
+						</ResponsiveContainer>
+					</CardContent>
+				</Card>
+			</div>
+		</>
+	);
 }
+
+const useStyles = makeStyles(theme => {
+	return {
+		container: {
+			display: 'grid',
+			gridTemplateColumns: '1fr 1fr',
+			gridTemplateRows: '1fr 1fr',
+			gridGap: theme.spacing(3),
+		},
+		card: {
+			display: 'flex',
+			flexGrow: 1,
+			minWidth: 275,
+			justifyContent: 'center',
+		},
+		radar: {
+			color: 'white',
+			fill: 'white',
+		},
+		topCard: {
+			width: '100%',
+			gridColumn: '1 / span 2',
+			gridRow: '1 / span 1',
+		},
+	};
+});
+
+export default Dashboard;

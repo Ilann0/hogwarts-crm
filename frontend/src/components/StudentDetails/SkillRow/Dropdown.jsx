@@ -36,7 +36,6 @@ function Dropdown(props) {
 		disabled = false,
 		...rest
 	} = props;
-	console.log(disabled);
 	return (
 		<FormControl
 			variant='filled'

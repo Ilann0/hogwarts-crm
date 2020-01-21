@@ -13,7 +13,7 @@ import MagicSkillList from './pages/MagicSkill/MagicSkillList';
 import MagicSkillDetails from './pages/MagicSkill/MagicSkillDetails';
 import './App.css';
 
-function App() {
+function App(props) {
 	const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
 	const theme = React.useMemo(
 		() =>
@@ -36,7 +36,6 @@ function App() {
 				<MiniDrawer title='Hogwarts Management'>
 					<Switch>
 						<Route exact path='/'>
-							Dashboard
 							<Dashboard />
 						</Route>
 						<Route exact path='/students'>

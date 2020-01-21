@@ -21,4 +21,7 @@ export const globalReducer = createReducer(initialState, {
 	RESET_GLOBAL_STATE: (state, action) => {
 		return initialState;
 	},
+	SET_TITLE: (state, action) => {
+		state.title = action.payload;
+	},
 });

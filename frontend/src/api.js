@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-const URL = 'https://hogwarts-crm-for-magic-api.herokuapp.com';
-// const URL = 'http://127.0.0.1:5000';
+// const URL = 'https://hogwarts-crm-for-magic-api.herokuapp.com';
+const URL = 'http://127.0.0.1:5000';
 
 // ----------------------------------------------------
 // Students
@@ -70,4 +70,11 @@ export function updateMagicSkill(data) {
 
 export function deleteMagicSkill(id) {
 	return axios.delete(URL + '/magicskill/' + id);
+}
+
+// ----------------------------------------------------
+// Statistics
+
+export function getStats(path) {
+	return axios.get(URL + '/stats/' + path);
 }

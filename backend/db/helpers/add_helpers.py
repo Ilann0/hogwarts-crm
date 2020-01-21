@@ -1,6 +1,7 @@
 from db.models import db, Student, Course, MagicSkill, MagicSkillAssociation, CourseAssociation
-# from db.helpers.change_helpers import change_student_last_update
 from db.helpers.error_helpers import catch_errors
+import datetime
+from random import randint
 # ----------------------------------------------------------------------------------------------------------------
 # Tables
 # @catch_errors
@@ -14,6 +15,8 @@ def add_new_student_with_props(data):
         add_course_to_student(student, course['id'])
     for magic_skill in data['magic_skills']:
         add_skill_to_student(student, magic_skill['id'], magic_skill['skill_level'], magic_skill['skill_category'])
+
+    student.date_created = datetime.datetime(2020, randint(1, 12), randint(1, 28))
     db.session.commit()
 
     return {'message': f"Student '{student.first_name}' has successfully been created"}, 201
